@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  slack-gpt:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: slack-gpt
+    environment:
+      SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN}
+      SLACK_APP_TOKEN: ${SLACK_APP_TOKEN}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      WEBHOOK_URL: ${WEBHOOK_URL}
+    restart: unless-stopped
