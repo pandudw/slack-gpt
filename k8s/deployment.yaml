@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: slack-gpt
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: slack-gpt
+  template:
+    metadata:
+      labels:
+        app: slack-gpt
+    spec:
+      containers:
+        - name: slack-gpt
+          image: <your-docker-image-name>
+          env:
+            - name: SLACK_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: slack-gpt-secrets
+                  key: SLACK_BOT_TOKEN
+            - name: SLACK_APP_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: slack-gpt-secrets
+                  key: SLACK_APP_TOKEN
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: slack-gpt-secrets
+                  key: OPENAI_API_KEY
+            - name: WEBHOOK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: slack-gpt-secrets
+                  key: WEBHOOK_URL
+          ports:
+            - containerPort: 5000
+      restartPolicy: Always
