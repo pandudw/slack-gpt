@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: slack-gpt-service
+  namespace: default
+spec:
+  selector:
+    app: slack-gpt
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+  type: ClusterIP  
